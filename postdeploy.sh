@@ -23,13 +23,19 @@ az config set extension.use_dynamic_install=yes_without_prompt
 az extension add --name azure-iot -y
 
 # echo 'retrieve files'
-git clone https://github.com/Thiennam209/dt-denso
+git clone https://github.com/Thiennam209/digitaltwinfactory
 
 # echo 'input model'
-az dt model create -n $adtname --models ./dt-denso/models/iotbroker.json --query [].id -o tsv
-az dt model create -n $adtname --models ./dt-denso/models/manuarea.json --query [].id -o tsv
-az dt model create -n $adtname --models ./dt-denso/models/linegroup.json --query [].id -o tsv
-az dt model create -n $adtname --models ./dt-denso/models/machine.json --query [].id -o tsv
+az dt model create -n $adtname --models ./digitaltwinfactory/models/machine.json --query [].id -o tsv
+
+
+for i in {0..2}
+do
+    echo "Create Machine MachineId$i"
+    az dt twin create -n $adtname --dtmi $MachineId --twin-id "MachineId$i"
+    az dt twin update -n $adtname --twin-id "MachineId$i" --json-patch '[{"op":"add", "path":"/MachineId", "value": "'"MachineId$i"'"},{"op":"add", "path":"/Alert", "value": false}]'
+done
+
 
 # az eventgrid topic create -g $rgname --name $egname -l $location
 az dt endpoint create eventgrid --dt-name $adtname --eventgrid-resource-group $rgname --eventgrid-topic $egname --endpoint-name "$egname-ep"
@@ -39,4 +45,4 @@ az dt route create --dt-name $adtname --endpoint-name "$egname-ep" --route-name 
 az eventgrid event-subscription create --name "$egname-broadcast-sub" --source-resource-id $egid --endpoint "$funcappid/functions/broadcast" --endpoint-type azurefunction
 
 # Retrieve and Upload models to blob storage
-az storage blob upload-batch --account-name $storagename -d $containername -s "./dt-denso/assets"
+az storage blob upload-batch --account-name $storagename -d $containername -s "./digitaltwinfactory/assets"
