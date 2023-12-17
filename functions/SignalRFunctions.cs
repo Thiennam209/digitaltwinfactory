@@ -17,28 +17,6 @@ namespace SignalRFunctions
     {
         public static string MachineId;
         public static string Time;
-        public static int Part;
-        public static string Station;
-        public static int Serial;
-        public static string AdjJudge;
-        public static double Pressure;
-        public static double IP1;
-        public static string CrimpJudge;
-        public static string PerformJudge;
-        public static double I1;
-        public static double I2;
-        public static double I3;
-        public static double I4;
-        public static double I1I15;
-        public static double I2I14;
-        public static double I3I13;
-        public static double Stick1;
-        public static double Stick3;
-        public static double Flow;
-        public static double Resp1_P5;
-        public static double Resp1_P6;
-        public static double Resp2_P5;
-        public static double Resp2_P6;
         public static bool Alert;
 
         [FunctionName("negotiate")]
