@@ -93,6 +93,12 @@ namespace My.Function
                     var tv_components_wifi_module_connected = deviceMessage["body"]["tv_components_wifi_module_connected"];
                     var tv_components_wifi_module_signal_strength = deviceMessage["body"]["tv_components_wifi_module_signal_strength"];
 
+                    log.LogInformation($"Device:{deviceId} Device Id is:{ID}");
+                    log.LogInformation($"Device:{tv_status} Device Id is:{tv_status}");
+                    log.LogInformation($"Device:{audio_output} Device Id is:{audio_output}");
+                    log.LogInformation($"Device:{tv_components_audio_system_volume} Device Id is:{tv_components_audio_system_volume}");
+
+
                     var updateProperty = new JsonPatchDocument();
 
                     var machineTelemetry = new Dictionary<string, Object>()

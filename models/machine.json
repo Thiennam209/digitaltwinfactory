@@ -2,8 +2,8 @@
   "@id": "dtmi:digitaltwins:Basic:machine;1",
   "@type": "Interface",
   "@context": ["dtmi:dtdl:context;2"],
-  "displayName": "Denso machine -v1",
-  "description": "Denso machine data",
+  "displayName": "Machine -v1",
+  "description": "Machine data",
   "contents": [
     {
       "@type": "Property",
