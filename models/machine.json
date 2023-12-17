@@ -1,0 +1,58 @@
+{
+  "@id": "dtmi:digitaltwins:Basic:machine;1",
+  "@type": "Interface",
+  "@context": ["dtmi:dtdl:context;2"],
+  "displayName": "Denso machine -v1",
+  "description": "Denso machine data",
+  "contents": [
+    {
+      "@type": "Property",
+      "name": "MachineId",
+      "displayName": "MachineId",
+      "description": "The unique id of the machine",
+      "writable": true,
+      "schema": "string"
+    },
+    {
+      "@type": "Property",
+      "name": "Alert",
+      "displayName": "Alert",
+      "description": "Whether or not this machine needs maintenance",
+      "writable": true,
+      "schema": "boolean"
+    },
+    {
+      "@type": "Property",
+      "name": "Time",
+      "displayName": "Time",
+      "description": "The Time interval of this data",
+      "writable": true,
+      "schema": "string"
+    },
+    {
+      "@type": "Property",
+      "name": "tv_status",
+      "displayName": "TV Status",
+      "writable": true,
+      "schema": "boolean"
+    },
+    {
+      "@type": "Property",
+      "name": "current_channel",
+      "displayName": "Current Channel",
+      "schema": {
+        "@type": "Object",
+        "fields": [
+          {
+            "name": "name",
+            "schema": "string"
+          },
+          {
+            "name": "number",
+            "schema": "integer"
+          }
+        ]
+      }
+    }
+  ]
+}
