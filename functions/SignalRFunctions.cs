@@ -19,26 +19,26 @@ namespace SignalRFunctions
         public static string Time;
         public static bool Alert;
         public static bool tv_status;
-        public static string current_channel_name;
-        public static int current_channel_number;
-        public static int volume_level;
-        public static bool volume_mute;
-        public static int display_settings_brightness;
-        public static int display_settings_contrast;
-        public static string display_settings_color_temperature;
-        public static string active_input;
-        public static string audio_output;
-        public static bool network_status_connected;
-        public static int network_status_wifi_strength;
-        public static double tv_components_main_board_temperature;
-        public static int tv_components_power_supply_voltage;
-        public static double tv_components_power_supply_current;
-        public static string tv_components_display_panel_resolution;
-        public static int tv_components_display_panel_backlight_intensity;
-        public static int tv_components_audio_system_volume;
-        public static bool tv_components_audio_system_mute;
-        public static bool tv_components_wifi_module_connected;
-        public static int tv_components_wifi_module_signal_strength;
+        // public static string current_channel_name;
+        // public static int current_channel_number;
+        // public static int volume_level;
+        // public static bool volume_mute;
+        // public static int display_settings_brightness;
+        // public static int display_settings_contrast;
+        // public static string display_settings_color_temperature;
+        // public static string active_input;
+        // public static string audio_output;
+        // public static bool network_status_connected;
+        // public static int network_status_wifi_strength;
+        // public static double tv_components_main_board_temperature;
+        // public static int tv_components_power_supply_voltage;
+        // public static double tv_components_power_supply_current;
+        // public static string tv_components_display_panel_resolution;
+        // public static int tv_components_display_panel_backlight_intensity;
+        // public static int tv_components_audio_system_volume;
+        // public static bool tv_components_audio_system_mute;
+        // public static bool tv_components_wifi_module_connected;
+        // public static int tv_components_wifi_module_signal_strength;
 
         [FunctionName("negotiate")]
         public static SignalRConnectionInfo GetSignalRInfo(
