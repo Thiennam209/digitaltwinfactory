@@ -15,7 +15,7 @@ namespace SignalRFunctions
 {
     public static class SignalRFunctions
     {
-        public static string machineid;
+        public static string turbineId;
         public static string timeInterval;
         public static bool description;
         public static int code;
@@ -61,7 +61,7 @@ namespace SignalRFunctions
             {
                 try
                 {
-                    machineid = eventGridEvent.Subject;
+                    turbineId = eventGridEvent.Subject;
 
                     var data = eventGridData.SelectToken("data");
                     var patch = data.SelectToken("patch");
@@ -76,7 +76,7 @@ namespace SignalRFunctions
                     log.LogInformation($"setting alert to: {alert}");
                     var property = new Dictionary<object, object>
                     {
-                        {"machineid", machineid },
+                        {"TurbineID", turbineId },
                         {"Alert", alert },
                         {"TimeInterval", timeInterval },
                         {"Description", description },

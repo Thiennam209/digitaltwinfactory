@@ -9,9 +9,9 @@
     "contents": [
         {
             "@type": "Property",
-            "name": "machineid",
-            "displayName": "machineid",
-            "description": "The unique id of the machine",
+            "name": "TurbineID",
+            "displayName": "TurbineID",
+            "description": "The unique id of the turbine",
             "writable": true,
             "schema": "string"
         },
@@ -19,7 +19,7 @@
             "@type": "Property",
             "name": "Alert",
             "displayName": "Alert",
-            "description": "whether or not this machine needs maintenance",
+            "description": "whether or not this turbine needs maintenance",
             "writable": true,
             "schema": "boolean"
         },
