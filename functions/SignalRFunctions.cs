@@ -17,12 +17,6 @@ namespace SignalRFunctions
     {
         public static string turbineId;
         public static string timeInterval;
-        public static bool description;
-        public static int code;
-        public static double windSpeed;
-        public static double temperature;
-        public static double rotorRPM;
-        public static double power = 0.0D;
         public static bool alert;
 
         [FunctionName("negotiate")]
@@ -77,14 +71,7 @@ namespace SignalRFunctions
                     var property = new Dictionary<object, object>
                     {
                         {"TurbineID", turbineId },
-                        {"Alert", alert },
-                        {"TimeInterval", timeInterval },
-                        {"Description", description },
-                        {"Code", code },
-                        {"WindSpeed", windSpeed },
-                        {"Ambient", temperature },
-                        {"Rotor", rotorRPM },
-                        {"Power", power }
+                        {"Alert", alert }
                     };
                     return signalRMessages.AddAsync(
                         new SignalRMessage

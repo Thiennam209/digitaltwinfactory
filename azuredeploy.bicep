@@ -192,7 +192,7 @@ resource appInsights 'Microsoft.Insights/components@2015-05-01' = {
 resource ingestfunction 'Microsoft.Web/sites/extensions@2015-08-01' = {
   name: '${funcApp.name}/MSDeploy'
   properties: {
-packageUri: 'https://cdn.glitch.global/749e2e85-0cea-4e1a-8f92-0db2d30224de/factory-function.zip?v=1702924969506'
+packageUri: 'https://cdn.glitch.global/749e2e85-0cea-4e1a-8f92-0db2d30224de/factory-function.zip?v=1702927265541'
 dbType: 'None'
     connectionString: ''
   }

@@ -48,7 +48,7 @@ namespace My.Function
                     var updateProperty = new JsonPatchDocument();
                     updateProperty.AppendReplace("/Alert", alert.Value<bool>());
                     updateProperty.AppendReplace("/TurbineID", ID.Value<string>());
-                    
+
                     log.LogInformation(updateProperty.ToString());
                     try
                     {
@@ -64,44 +64,88 @@ namespace My.Function
 
                     JObject deviceMessage = (JObject)JsonConvert.DeserializeObject(eventGridEvent.Data.ToString());
                     string deviceId = (string)deviceMessage["systemProperties"]["iothub-connection-device-id"];
-                   
+
                     var ID = deviceMessage["body"]["TurbineID"];
                     var TimeInterval = deviceMessage["body"]["TimeInterval"];
-                    var Description = deviceMessage["body"]["Description"];
-                    var Code = deviceMessage["body"]["Code"];
-                    var WindSpeed = deviceMessage["body"]["WindSpeed"];
-                    var Ambient = deviceMessage["body"]["Ambient"];
-                    var Rotor = deviceMessage["body"]["Rotor"];
-                    var Power = deviceMessage["body"]["Power"];
+                    var TvStatus = deviceMessage["body"]["TvStatus"];
+                    var CurrentChannelName = deviceMessage["body"]["CurrentChannelName"];
+                    var CurrentChannelNumber = deviceMessage["body"]["CurrentChannelNumber"];
+                    var VolumeLevel = deviceMessage["body"]["VolumeLevel"];
+                    var VolumeMute = deviceMessage["body"]["VolumeMute"];
+                    var DisplaySettingsBrightness = deviceMessage["body"]["DisplaySettingsBrightness"];
+                    var DisplaySettingsContrast = deviceMessage["body"]["DisplaySettingsContrast"];
+                    var DisplaySettingsColorTemperature = deviceMessage["body"]["DisplaySettingsColorTemperature"];
+                    var ActiveInput = deviceMessage["body"]["ActiveInput"];
+                    var AudioOutput = deviceMessage["body"]["AudioOutput"];
+                    var NetworkStatusConnected = deviceMessage["body"]["NetworkStatusConnected"];
+                    var NetworkStatusWifiStrength = deviceMessage["body"]["NetworkStatusWifiStrength"];
+                    var TvComponentsMainBoardTemperature = deviceMessage["body"]["TvComponentsMainBoardTemperature"];
+                    var TvComponentsPowerSupplyVoltage = deviceMessage["body"]["TvComponentsPowerSupplyVoltage"];
+                    var TvComponentsPowerSupplyCurrent = deviceMessage["body"]["TvComponentsPowerSupplyCurrent"];
+                    var TvComponentsDisplayPanelResolution = deviceMessage["body"]["TvComponentsDisplayPanelResolution"];
+                    var TvComponentsDisplayPanelBacklightIntensity = deviceMessage["body"]["TvComponentsDisplayPanelBacklightIntensity"];
+                    var TvComponentsAudioSystemVolume = deviceMessage["body"]["TvComponentsAudioSystemVolume"];
+                    var TvComponentsAudioSystemMute = deviceMessage["body"]["TvComponentsAudioSystemMute"];
+                    var TvComponentsWifiModuleConnected = deviceMessage["body"]["TvComponentsWifiModuleConnected"];
+                    var TvComponentsWifiModuleSignalStrength = deviceMessage["body"]["TvComponentsWifiModuleSignalStrength"];
 
                     log.LogInformation($"Device:{deviceId} Device Id is:{ID}");
                     log.LogInformation($"Device:{deviceId} Time interval is:{TimeInterval}");
-                    log.LogInformation($"Device:{deviceId} Description is:{Description}");
-                    log.LogInformation($"Device:{deviceId} CodeNumber is:{Code}");
-                    log.LogInformation($"Device:{deviceId} WindSpeed is:{WindSpeed}");
-                    log.LogInformation($"Device:{deviceId} Ambient Temperature is:{Ambient}");
-                    log.LogInformation($"Device:{deviceId} Rotor RPM is:{Rotor}");
-                    log.LogInformation($"Device:{deviceId} Power is:{Power}");
+                    log.LogInformation($"Device:{deviceId} TvStatus is:{TvStatus}");
+                    log.LogInformation($"Device:{deviceId} AudioOutput is:{AudioOutput}");
+                    log.LogInformation($"Device:{deviceId} TvComponentsAudioSystemVolumeis:{TvComponentsAudioSystemVolume}");
+
                     var updateProperty = new JsonPatchDocument();
                     var turbineTelemetry = new Dictionary<string, Object>()
                     {
                         ["TurbineID"] = ID,
                         ["TimeInterval"] = TimeInterval,
-                        ["Description"] = Description,
-                        ["Code"] = Code,
-                        ["WindSpeed"] = WindSpeed,
-                        ["Ambient"] = Ambient,
-                        ["Rotor"] = Rotor,
-                        ["Power"] = Power
+                        ["TvStatus"] = TvStatus,
+                        ["CurrentChannelName"] = CurrentChannelName,
+                        ["CurrentChannelNumber"] = CurrentChannelNumber,
+                        ["VolumeLevel"] = VolumeLevel,
+                        ["VolumeMute"] = VolumeMute,
+                        ["DisplaySettingsBrightness"] = DisplaySettingsBrightness,
+                        ["DisplaySettingsContrast"] = DisplaySettingsContrast,
+                        ["DisplaySettingsColorTemperature"] = DisplaySettingsColorTemperature,
+                        ["ActiveInput"] = ActiveInput,
+                        ["AudioOutput"] = AudioOutput,
+                        ["NetworkStatusConnected"] = NetworkStatusConnected,
+                        ["NetworkStatusWifiStrength"] = NetworkStatusWifiStrength,
+                        ["TvComponentsMainBoardTemperature"] = TvComponentsMainBoardTemperature,
+                        ["TvComponentsPowerSupplyVoltage"] = TvComponentsPowerSupplyVoltage,
+                        ["TvComponentsPowerSupplyCurrent"] = TvComponentsPowerSupplyCurrent,
+                        ["TvComponentsDisplayPanelResolution"] = TvComponentsDisplayPanelResolution,
+                        ["TvComponentsDisplayPanelBacklightIntensity"] = TvComponentsDisplayPanelBacklightIntensity,
+                        ["TvComponentsAudioSystemVolume"] = TvComponentsAudioSystemVolume,
+                        ["TvComponentsAudioSystemMute"] = TvComponentsAudioSystemMute,
+                        ["TvComponentsWifiModuleConnected"] = TvComponentsWifiModuleConnected,
+                        ["TvComponentsWifiModuleSignalStrength"] = TvComponentsWifiModuleSignalStrength
                     };
+                    
                     updateProperty.AppendAdd("/TurbineID", ID.Value<string>());
                     updateProperty.AppendAdd("/TimeInterval", TimeInterval.Value<string>());
-                    updateProperty.AppendAdd("/Description", Description.Value<bool>());
-                    updateProperty.AppendAdd("/Code", Code.Value<int>());
-                    updateProperty.AppendAdd("/WindSpeed", WindSpeed.Value<double>());
-                    updateProperty.AppendAdd("/Ambient", Ambient.Value<double>());
-                    updateProperty.AppendAdd("/Rotor", Rotor.Value<double>());
-                    updateProperty.AppendAdd("/Power", Power.Value<double>());
+                    updateProperty.AppendAdd("/TvStatus", TvStatus.Value<bool>());
+                    updateProperty.AppendAdd("/CurrentChannelName", CurrentChannelName.Value<string>());
+                    updateProperty.AppendAdd("/CurrentChannelNumber", CurrentChannelNumber.Value<int>());
+                    updateProperty.AppendAdd("/VolumeLevel", VolumeLevel.Value<int>());
+                    updateProperty.AppendAdd("/VolumeMute", VolumeMute.Value<bool>());
+                    updateProperty.AppendAdd("/DisplaySettingsBrightness", DisplaySettingsBrightness.Value<int>());
+                    updateProperty.AppendAdd("/DisplaySettingsContrast", DisplaySettingsContrast.Value<int>());
+                    updateProperty.AppendAdd("/DisplaySettingsColorTemperature", DisplaySettingsColorTemperature.Value<string>());
+                    updateProperty.AppendAdd("/ActiveInput", ActiveInput.Value<string>());
+                    updateProperty.AppendAdd("/AudioOutput", AudioOutput.Value<string>());
+                    updateProperty.AppendAdd("/NetworkStatusConnected", NetworkStatusConnected.Value<bool>());
+                    updateProperty.AppendAdd("/NetworkStatusWifiStrength", NetworkStatusWifiStrength.Value<int>());
+                    updateProperty.AppendAdd("/TvComponentsMainBoardTemperature", TvComponentsMainBoardTemperature.Value<double>());
+                    updateProperty.AppendAdd("/TvComponentsPowerSupplyVoltage", TvComponentsPowerSupplyVoltage.Value<int>());
+                    updateProperty.AppendAdd("/TvComponentsPowerSupplyCurrent", TvComponentsPowerSupplyCurrent.Value<double>());
+                    updateProperty.AppendAdd("/TvComponentsDisplayPanelResolution", TvComponentsDisplayPanelResolution.Value<string>());
+                    updateProperty.AppendAdd("/TvComponentsDisplayPanelBacklightIntensity", TvComponentsDisplayPanelBacklightIntensity.Value<int>());
+                    updateProperty.AppendAdd("/TvComponentsAudioSystemVolume", TvComponentsAudioSystemVolume.Value<int>());
+                    updateProperty.AppendAdd("/TvComponentsAudioSystemMute", TvComponentsAudioSystemMute.Value<bool>());
+                    updateProperty.AppendAdd("/TvComponentsWifiModuleConnected", TvComponentsWifiModuleConnected.Value<bool>());
+                    updateProperty.AppendAdd("/TvComponentsWifiModuleSignalStrength", TvComponentsWifiModuleSignalStrength.Value<int>());
 
                     log.LogInformation(updateProperty.ToString());
                     try

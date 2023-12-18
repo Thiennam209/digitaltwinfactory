@@ -1,77 +1,180 @@
 {
-    "@id": "dtmi:digitaltwins:Basic:Machine;1",
-    "@type": "Interface",
-    "@context": [
-        "dtmi:dtdl:context;2"
-    ],
-    "displayName": "Machine -v1",
-    "description": "Machine data",
-    "contents": [
-        {
-            "@type": "Property",
-            "name": "TurbineID",
-            "displayName": "TurbineID",
-            "description": "The unique id of the turbine",
-            "writable": true,
-            "schema": "string"
-        },
-        {
-            "@type": "Property",
-            "name": "Alert",
-            "displayName": "Alert",
-            "description": "whether or not this turbine needs maintenance",
-            "writable": true,
-            "schema": "boolean"
-        },
-        {
-            "@type": "Property",
-            "name": "TimeInterval",
-            "displayName": "TimeInterval",
-            "description":  "The time interval of this data",
-            "writable": true,
-            "schema": "string"
-        },
-        {
-            "@type": "Property",
-            "name": "Description",
-            "displayName": "Description",
-            "writable": true,
-            "schema": "boolean"
-        },
-        {
-            "@type": "Property",
-            "name": "Code",
-            "displayName": "Code",
-            "writable": true,
-            "schema": "integer"
-        },
-        {
-            "@type": "Property",
-            "name": "WindSpeed",
-            "displayName": "WindSpeed",
-            "writable": true,
-            "schema": "double"
-        },
-        {
-            "@type": "Property",
-            "name": "Ambient",
-            "displayName": "Ambient",
-            "writable": true,
-            "schema": "double"
-        },
-        {
-            "@type": "Property",
-            "name": "Rotor",
-            "displayName": "Rotor",
-            "writable": true,
-            "schema": "double"
-        },
-        {
-            "@type": "Property",
-            "name": "Power",
-            "displayName": "Power",
-            "writable": true,
-            "schema": "double"
-        }
-    ]
+  "@id": "dtmi:digitaltwins:Basic:Machine;1",
+  "@type": "Interface",
+  "@context": ["dtmi:dtdl:context;2"],
+  "displayName": "Machine -v1",
+  "description": "Machine data",
+  "contents": [
+    {
+      "@type": "Property",
+      "name": "TurbineID",
+      "displayName": "TurbineID",
+      "description": "The unique id of the turbine",
+      "writable": true,
+      "schema": "string"
+    },
+    {
+      "@type": "Property",
+      "name": "Alert",
+      "displayName": "Alert",
+      "description": "whether or not this turbine needs maintenance",
+      "writable": true,
+      "schema": "boolean"
+    },
+    {
+      "@type": "Property",
+      "name": "TimeInterval",
+      "displayName": "TimeInterval",
+      "description": "The time interval of this data",
+      "writable": true,
+      "schema": "string"
+    },
+    {
+      "@type": "Property",
+      "name": "TvStatus",
+      "displayName": "TV Status",
+      "writable": true,
+      "schema": "boolean"
+    },
+    {
+      "@type": "Property",
+      "name": "CurrentChannelName",
+      "displayName": "CurrentChannelName",
+      "writable": true,
+      "schema": "string"
+    },
+    {
+      "@type": "Property",
+      "name": "CurrentChannelNumber",
+      "displayName": "CurrentChannelNumber",
+      "writable": true,
+      "schema": "integer"
+    },
+    {
+      "@type": "Property",
+      "name": "VolumeLevel",
+      "displayName": "VolumeLevel",
+      "writable": true,
+      "schema": "integer"
+    },
+    {
+      "@type": "Property",
+      "name": "VolumeMute",
+      "displayName": "VolumeMute",
+      "writable": true,
+      "schema": "boolean"
+    },
+    {
+      "@type": "Property",
+      "name": "DisplaySettingsBrightness",
+      "displayName": "DisplaySettingsBrightness",
+      "writable": true,
+      "schema": "integer"
+    },
+    {
+      "@type": "Property",
+      "name": "DisplaySettingsContrast",
+      "displayName": "DisplaySettingsContrast",
+      "writable": true,
+      "schema": "integer"
+    },
+    {
+      "@type": "Property",
+      "name": "DisplaySettingsColorTemperature",
+      "displayName": "DisplaySettingsColorTemperature",
+      "writable": true,
+      "schema": "string"
+    },
+    {
+      "@type": "Property",
+      "name": "ActiveInput",
+      "displayName": "ActiveInput",
+      "writable": true,
+      "schema": "string"
+    },
+    {
+      "@type": "Property",
+      "name": "AudioOutput",
+      "displayName": "AudioOutput",
+      "writable": true,
+      "schema": "string"
+    },
+    {
+      "@type": "Property",
+      "name": "NetworkStatusConnected",
+      "displayName": "NetworkStatusConnected",
+      "writable": true,
+      "schema": "boolean"
+    },
+    {
+      "@type": "Property",
+      "name": "NetworkStatusWifiStrength",
+      "displayName": "NetworkStatusWifiStrength",
+      "writable": true,
+      "schema": "integer"
+    },
+    {
+      "@type": "Property",
+      "name": "TvComponentsMainBoardTemperature",
+      "displayName": "TvComponentsMainBoardTemperature",
+      "writable": true,
+      "schema": "double"
+    },
+    {
+      "@type": "Property",
+      "name": "TvComponentsPowerSupplyVoltage",
+      "displayName": "TvComponentsPowerSupplyVoltage",
+      "writable": true,
+      "schema": "integer"
+    },
+    {
+      "@type": "Property",
+      "name": "TvComponentsPowerSupplyCurrent",
+      "displayName": "TvComponentsPowerSupplyCurrent",
+      "writable": true,
+      "schema": "double"
+    },
+    {
+      "@type": "Property",
+      "name": "TvComponentsDisplayPanelResolution",
+      "displayName": "TvComponentsDisplayPanelResolution",
+      "writable": true,
+      "schema": "string"
+    },
+    {
+      "@type": "Property",
+      "name": "TvComponentsDisplayPanelBacklightIntensity",
+      "displayName": "TvComponentsDisplayPanelBacklightIntensity",
+      "writable": true,
+      "schema": "integer"
+    },
+    {
+      "@type": "Property",
+      "name": "TvComponentsAudioSystemVolume",
+      "displayName": "TvComponentsAudioSystemVolume",
+      "writable": true,
+      "schema": "integer"
+    },
+    {
+      "@type": "Property",
+      "name": "TvComponentsAudioSystemMute",
+      "displayName": "TvComponentsAudioSystemMute",
+      "writable": true,
+      "schema": "boolean"
+    },
+    {
+      "@type": "Property",
+      "name": "TvComponentsWifiModuleConnected",
+      "displayName": "TvComponentsWifiModuleConnected",
+      "writable": true,
+      "schema": "boolean"
+    },
+    {
+      "@type": "Property",
+      "name": "TvComponentsWifiModuleSignalStrength",
+      "displayName": "TvComponentsWifiModuleSignalStrength",
+      "writable": true,
+      "schema": "integer"
+    }
+  ]
 }
