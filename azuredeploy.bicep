@@ -37,14 +37,14 @@ resource iot 'microsoft.devices/iotHubs@2020-03-01' = {
   name: iotHubName
   location: location
   sku: {
-    name: 'S1'
+    name: 'F1'
     capacity: 1
   }
   properties: {
     eventHubEndpoints: {
       events: {
         retentionTimeInDays: 1
-        partitionCount: 4
+        partitionCount: 2
       }
     }
   }
@@ -60,7 +60,6 @@ resource storage 'Microsoft.Storage/storageAccounts@2018-02-01' = {
   kind: 'StorageV2'
   properties: {
     isHnsEnabled: false
-    allowBlobPublicAccess: true
   }
 }
 
@@ -68,7 +67,7 @@ resource storage 'Microsoft.Storage/storageAccounts@2018-02-01' = {
 resource filecontainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2021-02-01' = {
   name: '${storage.name}/default/${fileContainerName}'
   properties: {
-    publicAccess: 'Container'
+    publicAccess: 'Blob'
   }
   dependsOn: [
     storage
@@ -120,6 +119,7 @@ resource appserver 'Microsoft.Web/serverfarms@2019-08-01' = {
     name: 'B1'
   }
 }
+
 // create Function app for hosting the IoTHub ingress and SignalR egress
 resource funcApp 'Microsoft.Web/sites@2019-08-01' = {
   name: funcAppName
@@ -132,7 +132,7 @@ resource funcApp 'Microsoft.Web/sites@2019-08-01' = {
     siteConfig: {
       appSettings: [
         {
-          name: 'FUNCTIONS_WORKER_RUNTime'
+          name: 'FUNCTIONS_WORKER_RUNTIME'
           value: 'dotnet'
         }
         {
@@ -342,7 +342,7 @@ resource PostDeploymentscript 'Microsoft.Resources/deploymentScripts@2020-10-01'
     arguments: '${iot.name} ${adt.name} ${resourceGroup().name} ${location} ${eventGridChangeLogTopic.name} ${eventGridChangeLogTopic.id} ${funcApp.id} ${storage.name} ${fileContainerName}'
     primaryScriptUri: 'https://raw.githubusercontent.com/Thiennam209/digitaltwinfactory/main/postdeploy.sh'
     supportingScriptUris: []
-    Timeout: 'PT30M'
+    timeout: 'PT30M'
     cleanupPreference: 'OnExpiration'
     retentionInterval: 'P1D'
   }
