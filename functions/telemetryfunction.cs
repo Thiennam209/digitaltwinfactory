@@ -40,14 +40,14 @@ namespace My.Function
                 {
                     JObject alertMessage = (JObject)JsonConvert.DeserializeObject(eventGridEvent.Data.ToString());
                     string deviceId = (string)alertMessage["systemProperties"]["iothub-connection-device-id"];
-                    var ID = alertMessage["body"]["MachineID"];
+                    var ID = alertMessage["body"]["machineid"];
                     var alert = alertMessage["body"]["Alert"];
                     log.LogInformation($"Device:{deviceId} Device Id is:{ID}");
                     log.LogInformation($"Device:{deviceId} Alert Status is:{alert}");
 
                     var updateProperty = new JsonPatchDocument();
                     updateProperty.AppendReplace("/Alert", alert.Value<bool>());
-                    updateProperty.AppendReplace("/MachineID", ID.Value<string>());
+                    updateProperty.AppendReplace("/machineid", ID.Value<string>());
                     
                     log.LogInformation(updateProperty.ToString());
                     try
@@ -65,7 +65,7 @@ namespace My.Function
                     JObject deviceMessage = (JObject)JsonConvert.DeserializeObject(eventGridEvent.Data.ToString());
                     string deviceId = (string)deviceMessage["systemProperties"]["iothub-connection-device-id"];
                    
-                    var ID = deviceMessage["body"]["MachineID"];
+                    var ID = deviceMessage["body"]["machineid"];
                     var TimeInterval = deviceMessage["body"]["TimeInterval"];
                     var Description = deviceMessage["body"]["Description"];
                     var Code = deviceMessage["body"]["Code"];
@@ -85,7 +85,7 @@ namespace My.Function
                     var updateProperty = new JsonPatchDocument();
                     var machineTelemetry = new Dictionary<string, Object>()
                     {
-                        ["MachineID"] = ID,
+                        ["machineid"] = ID,
                         ["TimeInterval"] = TimeInterval,
                         ["Description"] = Description,
                         ["Code"] = Code,
@@ -94,7 +94,7 @@ namespace My.Function
                         ["Rotor"] = Rotor,
                         ["Power"] = Power
                     };
-                    updateProperty.AppendAdd("/MachineID", ID.Value<string>());
+                    updateProperty.AppendAdd("/machineid", ID.Value<string>());
                     updateProperty.AppendAdd("/TimeInterval", TimeInterval.Value<string>());
                     updateProperty.AppendAdd("/Description", Description.Value<bool>());
                     updateProperty.AppendAdd("/Code", Code.Value<int>());

@@ -36,7 +36,7 @@ for i in {1..2}
 do
     echo "Create Machine T$i"
     az dt twin create -n $adtname --dtmi $machineid --twin-id "T$i"
-    az dt twin update -n $adtname --twin-id "T$i" --json-patch '[{"op":"add", "path":"/MachineID", "value": "'"T$i"'"},{"op":"add", "path":"/Alert", "value": false}]'
+    az dt twin update -n $adtname --twin-id "T$i" --json-patch '[{"op":"add", "path":"/machineid", "value": "'"T$i"'"},{"op":"add", "path":"/Alert", "value": false}]'
 done
 
 

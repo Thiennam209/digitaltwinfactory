@@ -9,8 +9,8 @@
     "contents": [
         {
             "@type": "Property",
-            "name": "MachineID",
-            "displayName": "MachineID",
+            "name": "machineid",
+            "displayName": "machineid",
             "description": "The unique id of the machine",
             "writable": true,
             "schema": "string"
