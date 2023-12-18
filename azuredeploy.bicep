@@ -5,7 +5,7 @@ param utcValue string = utcNow()
 
 var location = resourceGroup().location
 
-var unique = substring(uniqueString(resourceGroup().id), 3)
+var unique = substring(uniqueString(resourceGroup().id),3)
 //var unique = ''
 
 var iotHubName = '${projectName}Hub${unique}'
@@ -16,9 +16,9 @@ var storageName = '${projectName}${unique}'
 var eventGridName = '${projectName}eg${unique}'
 var funcAppName = '${projectName}funcapp${unique}'
 var appInightsName = '${projectName}appinsight${unique}'
-var eventGridIngestName = '${projectName}egingest${unique}'
+var eventGridIngestName =  '${projectName}egingest${unique}'
 var eventGridCLTopicName = '${projectName}clt${unique}'
-var fileContainerName = 'bladeremoteassets'
+var fileContainerName =  'bladeremoteassets'
 var ingestFuncName = 'telemetryfunction'
 
 var identityName = '${projectName}scriptidentity'
@@ -31,6 +31,8 @@ var storageRoleDefinitionName = guid(identity.id, storageRoleDefinitionId, resou
 var ADTroleDefinitionAppName = guid(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', funcAppName), ADTroleDefinitionId, resourceGroup().id)
 var ADTRoleDefinitionUserName = guid(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', userId), ADTroleDefinitionId, resourceGroup().id)
 var ADTRoleDefinitionAppRegName = appRegObjectId
+
+
 
 // create iot hub
 resource iot 'microsoft.devices/iotHubs@2020-03-01' = {
@@ -92,7 +94,7 @@ resource signalr 'Microsoft.SignalRService/signalR@2020-07-01-preview' = {
   sku: {
     name: 'Free_F1'
     capacity: 1
-    tier: 'Free'
+    tier:  'Free'
   }
   properties: {
     cors: {
@@ -162,7 +164,7 @@ resource funcApp 'Microsoft.Web/sites@2019-08-01' = {
         {
           name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
           value: appInsights.properties.ConnectionString
-        }
+        }                
       ]
     }
     serverFarmId: appserver.id
@@ -190,8 +192,8 @@ resource appInsights 'Microsoft.Insights/components@2015-05-01' = {
 resource ingestfunction 'Microsoft.Web/sites/extensions@2015-08-01' = {
   name: '${funcApp.name}/MSDeploy'
   properties: {
-    packageUri: 'https://cdn.glitch.global/749e2e85-0cea-4e1a-8f92-0db2d30224de/factory-functions.zip'
-    dbType: 'None'
+packageUri: 'https://cdn.glitch.global/749e2e85-0cea-4e1a-8f92-0db2d30224de/windturbine-blade-functions.zip'
+dbType: 'None'
     connectionString: ''
   }
   dependsOn: [
@@ -300,7 +302,7 @@ resource adtroledefapp 'Microsoft.Authorization/roleAssignments@2018-09-01-previ
     principalId: reference(funcApp.id, '2019-08-01', 'Full').identity.principalId
     principalType: 'ServicePrincipal'
   }
-  dependsOn: [
+  dependsOn: [ 
     funcApp
   ]
 }
@@ -336,11 +338,11 @@ resource PostDeploymentscript 'Microsoft.Resources/deploymentScripts@2020-10-01'
       '${identity.id}': {}
     }
   }
-  properties: {
+    properties: {
     forceUpdateTag: utcValue
     azCliVersion: '2.15.0'
     arguments: '${iot.name} ${adt.name} ${resourceGroup().name} ${location} ${eventGridChangeLogTopic.name} ${eventGridChangeLogTopic.id} ${funcApp.id} ${storage.name} ${fileContainerName}'
-    primaryScriptUri: 'https://raw.githubusercontent.com/Thiennam209/digitaltwinfactory/main/postdeploy.sh'
+    primaryScriptUri: 'https://raw.githubusercontent.com/Thiennam209/windturbine/main/postdeploy.sh'
     supportingScriptUris: []
     timeout: 'PT30M'
     cleanupPreference: 'OnExpiration'
