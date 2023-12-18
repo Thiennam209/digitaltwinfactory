@@ -29,14 +29,14 @@ az extension add --name azure-iot -y
 git clone https://github.com/Thiennam209/digitaltwinfactory.git
 
 # echo 'input model'
-turbineid=$(az dt model create -n $adtname --models ./digitaltwinfactory/models/turbine.json --query [].id -o tsv)
+machineid=$(az dt model create -n $adtname --models ./digitaltwinfactory/models/machine.json --query [].id -o tsv)
 
 # echo 'instantiate ADT Instances'
 for i in {1..2}
 do
-    echo "Create Turbine T$i"
-    az dt twin create -n $adtname --dtmi $turbineid --twin-id "T$i"
-    az dt twin update -n $adtname --twin-id "T$i" --json-patch '[{"op":"add", "path":"/TurbineID", "value": "'"T$i"'"},{"op":"add", "path":"/Alert", "value": false}]'
+    echo "Create Machine T$i"
+    az dt twin create -n $adtname --dtmi $machineid --twin-id "T$i"
+    az dt twin update -n $adtname --twin-id "T$i" --json-patch '[{"op":"add", "path":"/MachineID", "value": "'"T$i"'"},{"op":"add", "path":"/Alert", "value": false}]'
 done
 
 

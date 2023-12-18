@@ -40,14 +40,14 @@ namespace My.Function
                 {
                     JObject alertMessage = (JObject)JsonConvert.DeserializeObject(eventGridEvent.Data.ToString());
                     string deviceId = (string)alertMessage["systemProperties"]["iothub-connection-device-id"];
-                    var ID = alertMessage["body"]["TurbineID"];
+                    var ID = alertMessage["body"]["MachineID"];
                     var alert = alertMessage["body"]["Alert"];
                     log.LogInformation($"Device:{deviceId} Device Id is:{ID}");
                     log.LogInformation($"Device:{deviceId} Alert Status is:{alert}");
 
                     var updateProperty = new JsonPatchDocument();
                     updateProperty.AppendReplace("/Alert", alert.Value<bool>());
-                    updateProperty.AppendReplace("/TurbineID", ID.Value<string>());
+                    updateProperty.AppendReplace("/MachineID", ID.Value<string>());
                     
                     log.LogInformation(updateProperty.ToString());
                     try
@@ -65,7 +65,7 @@ namespace My.Function
                     JObject deviceMessage = (JObject)JsonConvert.DeserializeObject(eventGridEvent.Data.ToString());
                     string deviceId = (string)deviceMessage["systemProperties"]["iothub-connection-device-id"];
                    
-                    var ID = deviceMessage["body"]["TurbineID"];
+                    var ID = deviceMessage["body"]["MachineID"];
                     var TimeInterval = deviceMessage["body"]["TimeInterval"];
                     var Description = deviceMessage["body"]["Description"];
                     var Code = deviceMessage["body"]["Code"];
@@ -83,9 +83,9 @@ namespace My.Function
                     log.LogInformation($"Device:{deviceId} Rotor RPM is:{Rotor}");
                     log.LogInformation($"Device:{deviceId} Power is:{Power}");
                     var updateProperty = new JsonPatchDocument();
-                    var turbineTelemetry = new Dictionary<string, Object>()
+                    var machineTelemetry = new Dictionary<string, Object>()
                     {
-                        ["TurbineID"] = ID,
+                        ["MachineID"] = ID,
                         ["TimeInterval"] = TimeInterval,
                         ["Description"] = Description,
                         ["Code"] = Code,
@@ -94,7 +94,7 @@ namespace My.Function
                         ["Rotor"] = Rotor,
                         ["Power"] = Power
                     };
-                    updateProperty.AppendAdd("/TurbineID", ID.Value<string>());
+                    updateProperty.AppendAdd("/MachineID", ID.Value<string>());
                     updateProperty.AppendAdd("/TimeInterval", TimeInterval.Value<string>());
                     updateProperty.AppendAdd("/Description", Description.Value<bool>());
                     updateProperty.AppendAdd("/Code", Code.Value<int>());
@@ -106,7 +106,7 @@ namespace My.Function
                     log.LogInformation(updateProperty.ToString());
                     try
                     {
-                        await client.PublishTelemetryAsync(deviceId, Guid.NewGuid().ToString(), JsonConvert.SerializeObject(turbineTelemetry));
+                        await client.PublishTelemetryAsync(deviceId, Guid.NewGuid().ToString(), JsonConvert.SerializeObject(machineTelemetry));
                     }
                     catch (Exception e)
                     {
