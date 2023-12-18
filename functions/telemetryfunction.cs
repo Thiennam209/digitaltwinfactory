@@ -67,7 +67,7 @@ namespace My.Function
                    
                     var ID = deviceMessage["body"]["MachineID"];
                     var Time = deviceMessage["body"]["Time"];
-                    var TvStatus = deviceMessage["body"]["tvStatus"];
+                    var TvStatus = deviceMessage["body"]["TvStatus"];
 
                     log.LogInformation($"Device:{deviceId} Device Id is:{ID}");
                     log.LogInformation($"Device:{deviceId} Time interval is:{Time}");
