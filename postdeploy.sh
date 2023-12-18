@@ -26,17 +26,17 @@ az config set extension.use_dynamic_install=yes_without_prompt
 az extension add --name azure-iot -y
 
 # echo 'retrieve files'
-git clone https://github.com/Thiennam209/windturbine.git
+git clone https://github.com/Thiennam209/digitaltwinfactory.git
 
 # echo 'input model'
-turbineid=$(az dt model create -n $adtname --models ./windturbine/models/turbine.json --query [].id -o tsv)
+machineid=$(az dt model create -n $adtname --models ./digitaltwinfactory/models/machine.json --query [].id -o tsv)
 
 # echo 'instantiate ADT Instances'
-for i in {98..107}
+for i in {1..2}
 do
-    echo "Create Turbine T$i"
-    az dt twin create -n $adtname --dtmi $turbineid --twin-id "T$i"
-    az dt twin update -n $adtname --twin-id "T$i" --json-patch '[{"op":"add", "path":"/TurbineID", "value": "'"T$i"'"},{"op":"add", "path":"/Alert", "value": false}]'
+    echo "Create Machine MachineID$i"
+    az dt twin create -n $adtname --dtmi $machineid --twin-id "MachineID$i"
+    az dt twin update -n $adtname --twin-id "MachineID$i" --json-patch '[{"op":"add", "path":"/MachineID", "value": "'"MachineID$i"'"},{"op":"add", "path":"/Alert", "value": false}]'
 done
 
 
@@ -48,4 +48,4 @@ az dt route create --dt-name $adtname --endpoint-name "$egname-ep" --route-name 
 az eventgrid event-subscription create --name "$egname-broadcast-sub" --source-resource-id $egid --endpoint "$funcappid/functions/broadcast" --endpoint-type azurefunction
 
 # Retrieve and Upload models to blob storage
-az storage blob upload-batch --account-name $storagename -d $containername -s "./windturbine/assets"
+az storage blob upload-batch --account-name $storagename -d $containername -s "./digitaltwinfactory/assets"

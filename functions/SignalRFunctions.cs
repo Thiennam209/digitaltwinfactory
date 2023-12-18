@@ -15,14 +15,9 @@ namespace SignalRFunctions
 {
     public static class SignalRFunctions
     {
-        public static string turbineId;
-        public static string timeInterval;
-        public static string description;
-        public static int code;
-        public static double windSpeed;
-        public static double temperature;
-        public static double rotorRPM;
-        public static double power = 0.0D;
+        public static string machineId;
+        public static string time;
+        public static bool tv_status;
         public static bool alert;
 
         [FunctionName("negotiate")]
@@ -61,7 +56,7 @@ namespace SignalRFunctions
             {
                 try
                 {
-                    turbineId = eventGridEvent.Subject;
+                    machineId = eventGridEvent.Subject;
 
                     var data = eventGridData.SelectToken("data");
                     var patch = data.SelectToken("patch");
@@ -76,15 +71,10 @@ namespace SignalRFunctions
                     log.LogInformation($"setting alert to: {alert}");
                     var property = new Dictionary<object, object>
                     {
-                        {"TurbineID", turbineId },
+                        {"MachineID", machineId },
                         {"Alert", alert },
-                        {"TimeInterval", timeInterval },
-                        {"Description", description },
-                        {"Code", code },
-                        {"WindSpeed", windSpeed },
-                        {"Ambient", temperature },
-                        {"Rotor", rotorRPM },
-                        {"Power", power }
+                        {"Time", time },
+                        {"tv_status", tv_status }
                     };
                     return signalRMessages.AddAsync(
                         new SignalRMessage
