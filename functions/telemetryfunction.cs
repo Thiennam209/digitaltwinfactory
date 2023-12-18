@@ -40,14 +40,14 @@ namespace My.Function
                 {
                     JObject alertMessage = (JObject)JsonConvert.DeserializeObject(eventGridEvent.Data.ToString());
                     string deviceId = (string)alertMessage["systemProperties"]["iothub-connection-device-id"];
-                    var ID = alertMessage["body"]["MachineID"];
+                    var ID = alertMessage["body"]["TurbineID"];
                     var alert = alertMessage["body"]["Alert"];
                     log.LogInformation($"Device:{deviceId} Device Id is:{ID}");
                     log.LogInformation($"Device:{deviceId} Alert Status is:{alert}");
 
                     var updateProperty = new JsonPatchDocument();
                     updateProperty.AppendReplace("/Alert", alert.Value<bool>());
-                    updateProperty.AppendReplace("/MachineID", ID.Value<string>());
+                    updateProperty.AppendReplace("/TurbineID", ID.Value<string>());
                     
                     log.LogInformation(updateProperty.ToString());
                     try
@@ -65,24 +65,43 @@ namespace My.Function
                     JObject deviceMessage = (JObject)JsonConvert.DeserializeObject(eventGridEvent.Data.ToString());
                     string deviceId = (string)deviceMessage["systemProperties"]["iothub-connection-device-id"];
                    
-                    var ID = deviceMessage["body"]["MachineID"];
-                    var Time = deviceMessage["body"]["Time"];
-                    var TvStatus = deviceMessage["body"]["TvStatus"];
+                    var ID = deviceMessage["body"]["TurbineID"];
+                    var TimeInterval = deviceMessage["body"]["TimeInterval"];
+                    var Description = deviceMessage["body"]["Description"];
+                    var Code = deviceMessage["body"]["Code"];
+                    var WindSpeed = deviceMessage["body"]["WindSpeed"];
+                    var Ambient = deviceMessage["body"]["Ambient"];
+                    var Rotor = deviceMessage["body"]["Rotor"];
+                    var Power = deviceMessage["body"]["Power"];
 
                     log.LogInformation($"Device:{deviceId} Device Id is:{ID}");
-                    log.LogInformation($"Device:{deviceId} Time interval is:{Time}");
-                    log.LogInformation($"Device:{deviceId} TvStatusNumber is:{TvStatus}");
-
+                    log.LogInformation($"Device:{deviceId} Time interval is:{TimeInterval}");
+                    log.LogInformation($"Device:{deviceId} Description is:{Description}");
+                    log.LogInformation($"Device:{deviceId} CodeNumber is:{Code}");
+                    log.LogInformation($"Device:{deviceId} WindSpeed is:{WindSpeed}");
+                    log.LogInformation($"Device:{deviceId} Ambient Temperature is:{Ambient}");
+                    log.LogInformation($"Device:{deviceId} Rotor RPM is:{Rotor}");
+                    log.LogInformation($"Device:{deviceId} Power is:{Power}");
                     var updateProperty = new JsonPatchDocument();
                     var turbineTelemetry = new Dictionary<string, Object>()
                     {
-                        ["MachineID"] = ID,
-                        ["Time"] = Time,
-                        ["TvStatus"] = TvStatus
+                        ["TurbineID"] = ID,
+                        ["TimeInterval"] = TimeInterval,
+                        ["Description"] = Description,
+                        ["Code"] = Code,
+                        ["WindSpeed"] = WindSpeed,
+                        ["Ambient"] = Ambient,
+                        ["Rotor"] = Rotor,
+                        ["Power"] = Power
                     };
-                    updateProperty.AppendAdd("/MachineID", ID.Value<string>());
-                    updateProperty.AppendAdd("/Time", Time.Value<string>());
-                    updateProperty.AppendAdd("/TvStatus", TvStatus.Value<bool>());
+                    updateProperty.AppendAdd("/TurbineID", ID.Value<string>());
+                    updateProperty.AppendAdd("/TimeInterval", TimeInterval.Value<string>());
+                    updateProperty.AppendAdd("/Description", Description.Value<bool>());
+                    updateProperty.AppendAdd("/Code", Code.Value<int>());
+                    updateProperty.AppendAdd("/WindSpeed", WindSpeed.Value<double>());
+                    updateProperty.AppendAdd("/Ambient", Ambient.Value<double>());
+                    updateProperty.AppendAdd("/Rotor", Rotor.Value<double>());
+                    updateProperty.AppendAdd("/Power", Power.Value<double>());
 
                     log.LogInformation(updateProperty.ToString());
                     try
