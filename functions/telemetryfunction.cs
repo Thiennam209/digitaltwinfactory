@@ -38,22 +38,18 @@ namespace My.Function
                 log.LogInformation($"ADT service client connection created.");
                 if (eventGridEvent.Data.ToString().Contains("Alert"))
                 {
-                    JObject AlertMessage = (JObject)JsonConvert.DeserializeObject(eventGridEvent.Data.ToString());
-                    string deviceId = (string)AlertMessage["systemProperties"]["iothub-connection-device-id"];
-
-                    var ID = AlertMessage["body"]["MachineId"];
-                    var Alert = AlertMessage["body"]["Alert"];
-
+                    JObject alertMessage = (JObject)JsonConvert.DeserializeObject(eventGridEvent.Data.ToString());
+                    string deviceId = (string)alertMessage["systemProperties"]["iothub-connection-device-id"];
+                    var ID = alertMessage["body"]["MachineId"];
+                    var alert = alertMessage["body"]["Alert"];
                     log.LogInformation($"Device:{deviceId} Device Id is:{ID}");
-                    log.LogInformation($"Device:{deviceId} Alert Status is:{Alert}");
+                    log.LogInformation($"Device:{deviceId} Alert Status is:{alert}");
 
                     var updateProperty = new JsonPatchDocument();
-
-                    updateProperty.AppendReplace("/Alert", Alert.Value<bool>());
+                    updateProperty.AppendReplace("/Alert", alert.Value<bool>());
                     updateProperty.AppendReplace("/MachineId", ID.Value<string>());
 
                     log.LogInformation(updateProperty.ToString());
-
                     try
                     {
                         await client.UpdateDigitalTwinAsync(deviceId, updateProperty);
@@ -94,14 +90,12 @@ namespace My.Function
                     var tv_components_wifi_module_signal_strength = deviceMessage["body"]["tv_components_wifi_module_signal_strength"];
 
                     log.LogInformation($"Device:{deviceId} Device Id is:{ID}");
-                    log.LogInformation($"Device:{tv_status} Device Id is:{tv_status}");
-                    log.LogInformation($"Device:{audio_output} Device Id is:{audio_output}");
-                    log.LogInformation($"Device:{tv_components_audio_system_volume} Device Id is:{tv_components_audio_system_volume}");
-
+                    log.LogInformation($"Device:{deviceId} tv_status is:{tv_status}");
+                    log.LogInformation($"Device:{deviceId} audio_output is:{audio_output}");
+                    log.LogInformation($"Device:{deviceId} tv_components_audio_system_volumeis:{tv_components_audio_system_volume}");
 
                     var updateProperty = new JsonPatchDocument();
-
-                    var machineTelemetry = new Dictionary<string, Object>()
+                    var turbineTelemetry = new Dictionary<string, Object>()
                     {
                         ["MachineId"] = ID,
                         ["Time"] = Time,
@@ -125,9 +119,9 @@ namespace My.Function
                         ["tv_components_audio_system_volume"] = tv_components_audio_system_volume,
                         ["tv_components_audio_system_mute"] = tv_components_audio_system_mute,
                         ["tv_components_wifi_module_connected"] = tv_components_wifi_module_connected,
-                        ["tv_components_wifi_module_signal_strength"] = tv_components_wifi_module_signal_strength,
+                        ["tv_components_wifi_module_signal_strength"] = tv_components_wifi_module_signal_strength
                     };
-
+                    
                     updateProperty.AppendAdd("/MachineId", ID.Value<string>());
                     updateProperty.AppendAdd("/Time", Time.Value<string>());
                     updateProperty.AppendAdd("/tv_status", tv_status.Value<bool>());
@@ -155,7 +149,7 @@ namespace My.Function
                     log.LogInformation(updateProperty.ToString());
                     try
                     {
-                        await client.PublishTelemetryAsync(deviceId, Guid.NewGuid().ToString(), JsonConvert.SerializeObject(machineTelemetry));
+                        await client.PublishTelemetryAsync(deviceId, Guid.NewGuid().ToString(), JsonConvert.SerializeObject(turbineTelemetry));
                     }
                     catch (Exception e)
                     {

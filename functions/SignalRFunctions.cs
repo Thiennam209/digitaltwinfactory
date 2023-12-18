@@ -88,11 +88,11 @@ namespace SignalRFunctions
                         }
                     }
 
-                    log.LogInformation($"setting Alert to: {Alert}");
+                    log.LogInformation($"setting alert to: {Alert}");
                     var property = new Dictionary<object, object>
                     {
                         {"MachineId", MachineId },
-                        {"Alert",Alert}
+                        {"Alert", Alert }
                     };
                     return signalRMessages.AddAsync(
                         new SignalRMessage
@@ -111,3 +111,4 @@ namespace SignalRFunctions
         }
     }
 }
+
