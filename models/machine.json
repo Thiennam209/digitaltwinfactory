@@ -33,7 +33,7 @@
         },
         {
             "@type": "Property",
-            "name": "tv_status",
+            "name": "TvStatus",
             "displayName": "TV Status",
             "writable": true,
             "schema": "boolean"

@@ -17,7 +17,7 @@ namespace SignalRFunctions
     {
         public static string machineId;
         public static string time;
-        public static bool tv_status;
+        public static bool TvStatus;
         public static bool alert;
 
         [FunctionName("negotiate")]
@@ -72,9 +72,7 @@ namespace SignalRFunctions
                     var property = new Dictionary<object, object>
                     {
                         {"MachineID", machineId },
-                        {"Alert", alert },
-                        {"Time", time },
-                        {"tv_status", tv_status }
+                        {"Alert", alert }
                     };
                     return signalRMessages.AddAsync(
                         new SignalRMessage

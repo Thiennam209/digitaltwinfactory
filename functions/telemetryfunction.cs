@@ -67,22 +67,22 @@ namespace My.Function
                    
                     var ID = deviceMessage["body"]["MachineID"];
                     var Time = deviceMessage["body"]["Time"];
-                    var tv_status = deviceMessage["body"]["tv_status"];
+                    var TvStatus = deviceMessage["body"]["tvStatus"];
 
                     log.LogInformation($"Device:{deviceId} Device Id is:{ID}");
                     log.LogInformation($"Device:{deviceId} Time interval is:{Time}");
-                    log.LogInformation($"Device:{deviceId} tv_statusNumber is:{tv_status}");
+                    log.LogInformation($"Device:{deviceId} TvStatusNumber is:{TvStatus}");
 
                     var updateProperty = new JsonPatchDocument();
                     var turbineTelemetry = new Dictionary<string, Object>()
                     {
                         ["MachineID"] = ID,
                         ["Time"] = Time,
-                        ["tv_status"] = tv_status
+                        ["TvStatus"] = TvStatus
                     };
                     updateProperty.AppendAdd("/MachineID", ID.Value<string>());
                     updateProperty.AppendAdd("/Time", Time.Value<string>());
-                    updateProperty.AppendAdd("/tv_status", tv_status.Value<bool>());
+                    updateProperty.AppendAdd("/TvStatus", TvStatus.Value<bool>());
 
                     log.LogInformation(updateProperty.ToString());
                     try
