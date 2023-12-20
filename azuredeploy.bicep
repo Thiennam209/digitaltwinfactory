@@ -32,7 +32,22 @@ var ADTroleDefinitionAppName = guid(resourceId('Microsoft.ManagedIdentity/userAs
 var ADTRoleDefinitionUserName = guid(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', userId), ADTroleDefinitionId, resourceGroup().id)
 var ADTRoleDefinitionAppRegName = appRegObjectId
 
-
+// resource iot 'microsoft.devices/iotHubs@2020-03-01' = {
+//   name: iotHubName
+//   location: location
+//   sku: {
+//     name: 'S1'
+//     capacity: 1
+//   }
+//   properties: {
+//     eventHubEndpoints: {
+//       events: {
+//         retentionTimeInDays: 1
+//         partitionCount: 4
+//       }
+//     }
+//   }
+// }
 
 // create iot hub
 resource iot 'microsoft.devices/iotHubs@2020-03-01' = {
