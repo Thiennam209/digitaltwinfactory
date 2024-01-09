@@ -32,7 +32,7 @@ git clone https://github.com/Thiennam209/digitaltwinfactory.git
 turbineid=$(az dt model create -n $adtname --models ./digitaltwinfactory/models/machine.json --query [].id -o tsv)
 
 # echo 'instantiate ADT Instances'
-for i in {1..2}
+for i in {1..8}
 do
     echo "Create Turbine Machine$i"
     az dt twin create -n $adtname --dtmi $turbineid --twin-id "Machine$i"
