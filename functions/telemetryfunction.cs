@@ -67,27 +67,27 @@ namespace My.Function
 
                     var ID = deviceMessage["body"]["TurbineID"];
                     var TimeInterval = deviceMessage["body"]["TimeInterval"];
-                    var TvStatus = deviceMessage["body"]["TvStatus"];
-                    var CurrentChannelName = deviceMessage["body"]["CurrentChannelName"];
-                    var CurrentChannelNumber = deviceMessage["body"]["CurrentChannelNumber"];
-                    var VolumeLevel = deviceMessage["body"]["VolumeLevel"];
-                    var VolumeMute = deviceMessage["body"]["VolumeMute"];
-                    var DisplaySettingsBrightness = deviceMessage["body"]["DisplaySettingsBrightness"];
-                    var DisplaySettingsContrast = deviceMessage["body"]["DisplaySettingsContrast"];
-                    var DisplaySettingsColorTemperature = deviceMessage["body"]["DisplaySettingsColorTemperature"];
-                    var ActiveInput = deviceMessage["body"]["ActiveInput"];
-                    var AudioOutput = deviceMessage["body"]["AudioOutput"];
-                    var NetworkStatusConnected = deviceMessage["body"]["NetworkStatusConnected"];
-                    var NetworkStatusWifiStrength = deviceMessage["body"]["NetworkStatusWifiStrength"];
-                    var TvComponentsMainBoardTemperature = deviceMessage["body"]["TvComponentsMainBoardTemperature"];
-                    var TvComponentsPowerSupplyVoltage = deviceMessage["body"]["TvComponentsPowerSupplyVoltage"];
-                    var TvComponentsPowerSupplyCurrent = deviceMessage["body"]["TvComponentsPowerSupplyCurrent"];
-                    var TvComponentsDisplayPanelResolution = deviceMessage["body"]["TvComponentsDisplayPanelResolution"];
-                    var TvComponentsDisplayPanelBacklightIntensity = deviceMessage["body"]["TvComponentsDisplayPanelBacklightIntensity"];
-                    var TvComponentsAudioSystemVolume = deviceMessage["body"]["TvComponentsAudioSystemVolume"];
-                    var TvComponentsAudioSystemMute = deviceMessage["body"]["TvComponentsAudioSystemMute"];
-                    var TvComponentsWifiModuleConnected = deviceMessage["body"]["TvComponentsWifiModuleConnected"];
-                    var TvComponentsWifiModuleSignalStrength = deviceMessage["body"]["TvComponentsWifiModuleSignalStrength"];
+                    var TvStatus = deviceMessage["body"]["TvStatus"] != null ? deviceMessage["body"]["TvStatus"] : true;
+                    var CurrentChannelName = deviceMessage["body"]["CurrentChannelName"] != null ? deviceMessage["body"]["CurrentChannelName"] : "";
+                    var CurrentChannelNumber = deviceMessage["body"]["CurrentChannelNumber"] != null ? deviceMessage["body"]["CurrentChannelNumber"] : 0;
+                    var VolumeLevel = deviceMessage["body"]["VolumeLevel"] != null ? deviceMessage["body"]["VolumeLevel"] : 0;
+                    var VolumeMute = deviceMessage["body"]["VolumeMute"] != null ? deviceMessage["body"]["VolumeMute"] : false;
+                    var DisplaySettingsBrightness = deviceMessage["body"]["DisplaySettingsBrightness"] != null ? deviceMessage["body"]["DisplaySettingsBrightness"] : 0;
+                    var DisplaySettingsContrast = deviceMessage["body"]["DisplaySettingsContrast"] != null ? deviceMessage["body"]["DisplaySettingsContrast"] : 0;
+                    var DisplaySettingsColorTemperature = deviceMessage["body"]["DisplaySettingsColorTemperature"] != null ? deviceMessage["body"]["DisplaySettingsColorTemperature"] :"";
+                    var ActiveInput = deviceMessage["body"]["ActiveInput"] != null ? deviceMessage["body"]["ActiveInput"] :"";
+                    var AudioOutput = deviceMessage["body"]["AudioOutput"] != null ? deviceMessage["body"]["AudioOutput"] : "";
+                    var NetworkStatusConnected = deviceMessage["body"]["NetworkStatusConnected"] != null ? deviceMessage["body"]["NetworkStatusConnected"] : true;
+                    var NetworkStatusWifiStrength = deviceMessage["body"]["NetworkStatusWifiStrength"] != null ? deviceMessage["body"]["NetworkStatusWifiStrength"] : 0;
+                    var TvComponentsMainBoardTemperature = deviceMessage["body"]["TvComponentsMainBoardTemperature"] != null ? deviceMessage["body"]["TvComponentsMainBoardTemperature"] : 0;
+                    var TvComponentsPowerSupplyVoltage = deviceMessage["body"]["TvComponentsPowerSupplyVoltage"] != null ? deviceMessage["body"]["TvComponentsPowerSupplyVoltage"] : 0;
+                    var TvComponentsPowerSupplyCurrent = deviceMessage["body"]["TvComponentsPowerSupplyCurrent"] != null ? deviceMessage["body"]["TvComponentsPowerSupplyCurrent"] : 0;
+                    var TvComponentsDisplayPanelResolution = deviceMessage["body"]["TvComponentsDisplayPanelResolution"] != null ? deviceMessage["body"]["TvComponentsDisplayPanelResolution"] : "";
+                    var TvComponentsDisplayPanelBacklightIntensity = deviceMessage["body"]["TvComponentsDisplayPanelBacklightIntensity"] != null ? deviceMessage["body"]["TvComponentsDisplayPanelBacklightIntensity"] : 0;
+                    var TvComponentsAudioSystemVolume = deviceMessage["body"]["TvComponentsAudioSystemVolume"] != null ? deviceMessage["body"]["TvComponentsAudioSystemVolume"] : 0;
+                    var TvComponentsAudioSystemMute = deviceMessage["body"]["TvComponentsAudioSystemMute"] != null ? deviceMessage["body"]["TvComponentsAudioSystemMute"] : false;
+                    var TvComponentsWifiModuleConnected = deviceMessage["body"]["TvComponentsWifiModuleConnected"] != null ? deviceMessage["body"]["TvComponentsWifiModuleConnected"] : true;
+                    var TvComponentsWifiModuleSignalStrength = deviceMessage["body"]["TvComponentsWifiModuleSignalStrength"] != null ? deviceMessage["body"]["TvComponentsWifiModuleSignalStrength"] : 0;
 
                     log.LogInformation($"Device:{deviceId} Device Id is:{ID}");
                     log.LogInformation($"Device:{deviceId} Time interval is:{TimeInterval}");
@@ -122,7 +122,7 @@ namespace My.Function
                         ["TvComponentsWifiModuleConnected"] = TvComponentsWifiModuleConnected,
                         ["TvComponentsWifiModuleSignalStrength"] = TvComponentsWifiModuleSignalStrength
                     };
-                    
+
                     updateProperty.AppendAdd("/TurbineID", ID.Value<string>());
                     updateProperty.AppendAdd("/TimeInterval", TimeInterval.Value<string>());
                     updateProperty.AppendAdd("/TvStatus", TvStatus.Value<bool>());
