@@ -24,6 +24,7 @@ namespace My.Function
         [FunctionName("telemetryfunction")]
         public async void Run([EventGridTrigger] EventGridEvent eventGridEvent, ILogger log)
         {
+            log.LogInformation("Run");
             try
             {
                 // After this is deployed, you need to turn the Managed Identity Status to "On",
@@ -61,9 +62,12 @@ namespace My.Function
                 }
                 else if (eventGridEvent != null && eventGridEvent.Data != null)
                 {
-
+                    log.LogInformation("eventGridEvent");
                     JObject deviceMessage = (JObject)JsonConvert.DeserializeObject(eventGridEvent.Data.ToString());
+                    log.LogInformation("deviceMessage");
+
                     string deviceId = (string)deviceMessage["systemProperties"]["iothub-connection-device-id"];
+                    log.LogInformation("deviceId");
 
                     var ID = deviceMessage["body"]["TurbineID"];
                     var TimeInterval = deviceMessage["body"]["TimeInterval"];
@@ -74,8 +78,8 @@ namespace My.Function
                     var VolumeMute = deviceMessage["body"]["VolumeMute"] != null ? deviceMessage["body"]["VolumeMute"] : false;
                     var DisplaySettingsBrightness = deviceMessage["body"]["DisplaySettingsBrightness"] != null ? deviceMessage["body"]["DisplaySettingsBrightness"] : 0;
                     var DisplaySettingsContrast = deviceMessage["body"]["DisplaySettingsContrast"] != null ? deviceMessage["body"]["DisplaySettingsContrast"] : 0;
-                    var DisplaySettingsColorTemperature = deviceMessage["body"]["DisplaySettingsColorTemperature"] != null ? deviceMessage["body"]["DisplaySettingsColorTemperature"] :"";
-                    var ActiveInput = deviceMessage["body"]["ActiveInput"] != null ? deviceMessage["body"]["ActiveInput"] :"";
+                    var DisplaySettingsColorTemperature = deviceMessage["body"]["DisplaySettingsColorTemperature"] != null ? deviceMessage["body"]["DisplaySettingsColorTemperature"] : "";
+                    var ActiveInput = deviceMessage["body"]["ActiveInput"] != null ? deviceMessage["body"]["ActiveInput"] : "";
                     var AudioOutput = deviceMessage["body"]["AudioOutput"] != null ? deviceMessage["body"]["AudioOutput"] : "";
                     var NetworkStatusConnected = deviceMessage["body"]["NetworkStatusConnected"] != null ? deviceMessage["body"]["NetworkStatusConnected"] : true;
                     var NetworkStatusWifiStrength = deviceMessage["body"]["NetworkStatusWifiStrength"] != null ? deviceMessage["body"]["NetworkStatusWifiStrength"] : 0;
@@ -88,6 +92,16 @@ namespace My.Function
                     var TvComponentsAudioSystemMute = deviceMessage["body"]["TvComponentsAudioSystemMute"] != null ? deviceMessage["body"]["TvComponentsAudioSystemMute"] : false;
                     var TvComponentsWifiModuleConnected = deviceMessage["body"]["TvComponentsWifiModuleConnected"] != null ? deviceMessage["body"]["TvComponentsWifiModuleConnected"] : true;
                     var TvComponentsWifiModuleSignalStrength = deviceMessage["body"]["TvComponentsWifiModuleSignalStrength"] != null ? deviceMessage["body"]["TvComponentsWifiModuleSignalStrength"] : 0;
+                    var oxys = deviceMessage["body"]["oxys"] != null ? deviceMessage["body"]["oxys"] : 1;
+                    var ats = deviceMessage["body"]["ats"] != null ? deviceMessage["body"]["ats"] : 1;
+                    var pressure = deviceMessage["body"]["pressure"] != null ? deviceMessage["body"]["pressure"] : 1;
+                    var cps = deviceMessage["body"]["cps"] != null ? deviceMessage["body"]["cps"] : 0;
+                    var aps = deviceMessage["body"]["aps"] != null ? deviceMessage["body"]["aps"] : 0;
+                    var sas = deviceMessage["body"]["sas"] != null ? deviceMessage["body"]["sas"] : 0;
+                    var vss = deviceMessage["body"]["vss"] != null ? deviceMessage["body"]["vss"] : 0;
+                    var iat = deviceMessage["body"]["iat"] != null ? deviceMessage["body"]["iat"] : 0;
+                    var maf = deviceMessage["body"]["maf"] != null ? deviceMessage["body"]["maf"] : 0;
+                    var ect = deviceMessage["body"]["ect"] != null ? deviceMessage["body"]["ect"] : 0;
 
                     log.LogInformation($"Device:{deviceId} Device Id is:{ID}");
                     log.LogInformation($"Device:{deviceId} Time interval is:{TimeInterval}");
@@ -120,7 +134,17 @@ namespace My.Function
                         ["TvComponentsAudioSystemVolume"] = TvComponentsAudioSystemVolume,
                         ["TvComponentsAudioSystemMute"] = TvComponentsAudioSystemMute,
                         ["TvComponentsWifiModuleConnected"] = TvComponentsWifiModuleConnected,
-                        ["TvComponentsWifiModuleSignalStrength"] = TvComponentsWifiModuleSignalStrength
+                        ["TvComponentsWifiModuleSignalStrength"] = TvComponentsWifiModuleSignalStrength,
+                        ["oxys"] = oxys,
+                        ["ats"] = ats,
+                        ["pressure"] = pressure,
+                        ["cps"] = cps,
+                        ["aps"] = aps,
+                        ["sas"] = sas,
+                        ["vss"] = vss,
+                        ["iat"] = iat,
+                        ["maf"] = maf,
+                        ["ect"] = ect
                     };
 
                     updateProperty.AppendAdd("/TurbineID", ID.Value<string>());
@@ -146,7 +170,16 @@ namespace My.Function
                     updateProperty.AppendAdd("/TvComponentsAudioSystemMute", TvComponentsAudioSystemMute.Value<bool>());
                     updateProperty.AppendAdd("/TvComponentsWifiModuleConnected", TvComponentsWifiModuleConnected.Value<bool>());
                     updateProperty.AppendAdd("/TvComponentsWifiModuleSignalStrength", TvComponentsWifiModuleSignalStrength.Value<int>());
-
+                    updateProperty.AppendAdd("/oxys", oxys.Value<double>());
+                    updateProperty.AppendAdd("/ats", ats.Value<double>());
+                    updateProperty.AppendAdd("/pressure", pressure.Value<double>());
+                    updateProperty.AppendAdd("/cps", cps.Value<double>());
+                    updateProperty.AppendAdd("/aps", aps.Value<double>());
+                    updateProperty.AppendAdd("/sas", sas.Value<double>());
+                    updateProperty.AppendAdd("/vss", vss.Value<double>());
+                    updateProperty.AppendAdd("/iat", iat.Value<double>());
+                    updateProperty.AppendAdd("/maf", maf.Value<double>());
+                    updateProperty.AppendAdd("/ect", ect.Value<double>());
                     log.LogInformation(updateProperty.ToString());
                     try
                     {
